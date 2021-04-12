@@ -19,18 +19,30 @@ public class CartService {
         return cartRepository.findAll();
     }
 
-      static Optional<Cart> findbyemail(String email, CartRepository cartRepository) {
+      static List<Cart> findUserByEmail(String email, CartRepository cartRepository) {
 return cartRepository.findUserByEmail(email);
     }
 
+    public static void deleteAll(CartRepository cartRepository) {
+        cartRepository.deleteAll();
+    }
 
-    public void addToCart(Cart cart) {
 
-        Optional<Cart> cartbyEmail = cartRepository.findCartByName(cart.getProductName());
-        if (cartbyEmail.isPresent()) {
-            System.out.println("hi");
-        }
-        cartRepository.save(cart);
+     public  void  addToCart(Cart cart,CartRepository cartRepository) {
+
+        
+      
+             cartRepository.save(cart);
+        
+
+    }
+
+    private void useful(Cart cart) {
+        Long id = cart.getId();
+        int a  = Integer.parseInt(String.valueOf(id));
+        int b = a;
+        Long l= new Long(b);//first way.
+        cartRepository.deleteById(l);
 
     }
 
@@ -45,6 +57,15 @@ return cartRepository.findUserByEmail(email);
         cartRepository.deleteById(id);
 
     }
+
+
+
+
+
+
+
+
+
 }
 
 

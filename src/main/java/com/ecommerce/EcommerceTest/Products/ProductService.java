@@ -1,6 +1,8 @@
 package com.ecommerce.EcommerceTest.Products;
 
 
+import com.ecommerce.EcommerceTest.Cart.Cart;
+import com.ecommerce.EcommerceTest.Cart.CartRepository;
 import com.ecommerce.EcommerceTest.Users.User;
 import com.ecommerce.EcommerceTest.Users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class ProductService {
 
 
     public void addNewProduct(Product product) {
-        Optional<User> productByName = productRepository.findProductByName(product.getProductName());
+        Optional<Product> productByName = productRepository.findProductByName(product.getProductName());
         if(productByName.isPresent()){
             throw  new IllegalStateException("email is taken");
 
@@ -37,11 +39,26 @@ public class ProductService {
         productRepository.save(product);
         //System.out.println("user created");
 
+    }    public static void deleteProduct(Long id, ProductRepository productRepository) {
+
+        boolean b = productRepository.existsById(id);
+        if (!b) {
+
+            throw new IllegalStateException("student is unnormal");
+        }
+        productRepository.deleteById(id);
+
     }
 
 
+    public Optional<Product> findProductByName(String productname, ProductRepository productRepository) {
+        return productRepository.findProductByName(productname);
 
-
+    }
+     public void deleteAllProduct(ProductRepository productReposit)
+     {
+         productRepository.deleteAll();
+     }
 
 }
 

@@ -1,5 +1,6 @@
 package com.ecommerce.EcommerceTest.Users;
 
+import com.ecommerce.EcommerceTest.Cart.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.ErrorHandler;
@@ -35,7 +36,16 @@ public void addNewUser(User user) {
         System.out.println("user created");
 
         }
+        public static void deleteUser(Long id, UsersRepository usersRepository) {
 
+                boolean b = usersRepository.existsById(id);
+                if (!b) {
+
+                        throw new IllegalStateException("student is unnormal");
+                }
+                usersRepository.deleteById(id);
+
+        }
 
 
 

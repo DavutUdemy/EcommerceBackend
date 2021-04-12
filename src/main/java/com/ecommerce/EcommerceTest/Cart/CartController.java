@@ -1,8 +1,5 @@
 package com.ecommerce.EcommerceTest.Cart;
 
-import com.ecommerce.EcommerceTest.Products.Product;
-import com.ecommerce.EcommerceTest.Products.ProductRepository;
-import com.ecommerce.EcommerceTest.Products.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +9,8 @@ import java.util.Optional;
 
 @Controller
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RequestMapping(path = "api/v3/Card")
 public class CartController {
     private final CartService cartService;
@@ -27,17 +26,27 @@ public class CartController {
     }
     @PostMapping
     public void addToCart(@RequestBody Cart cart){
-        cartService.addToCart(cart);
+        cartService.addToCart(cart,cartRepository);
     }
     @DeleteMapping(path = "{id}")
     public void deleteCart(@PathVariable("id")Long id){
         CartService.deleteCart(id,cartRepository);
     }
     @GetMapping(path = "{email}")
-    public Optional<Cart> FilterById(@PathVariable String email ){
+    public List<Cart> findUserByEmail(@PathVariable String email ){
 
-        return CartService.findbyemail(email,cartRepository);
+        return CartService.findUserByEmail(email,cartRepository);
     }
+    @PutMapping("{productName}")
+    void cartProduct(@RequestBody Cart cart, @PathVariable String productName) {
+int productquantity = 5;
+
+    }
+    @DeleteMapping("all")
+    public void deleteAll(){
+        CartService.deleteAll(cartRepository);
+    }
+
 
 
 
